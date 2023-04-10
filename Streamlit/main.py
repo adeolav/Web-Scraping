@@ -14,6 +14,8 @@ res = requests.get(url)
 
 content = BeautifulSoup(res.content, 'html.parser')
 quotes = content.find_all('div', class_='quote')
+quote_file = []
+
 for quote in quotes:
     text = quote.find('span', class_='text').text
     author = quote.find('small', class_='author').text
@@ -25,6 +27,6 @@ for quote in quotes:
 if generate:
     try:
         df =pd.DataFrame(quote_file)
-        df.goto_csv('quotes.csv', index=False, header=['Quote', 'Author', 'Link'], encoding='cp1252')
+        df.to_csv('quotes.csv', index=False, header=['Quote', 'Author', 'Link'], encoding='cp1252')
     except:
         st.write('loading....')
